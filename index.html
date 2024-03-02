@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 	
-	<title>LIX Fit</title>
+	<title>LIX Fit | Vitamins, Supplements, Pre-workout, and Sports Nutrition </title>
 	<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0"/>
 <meta name="_csrf" content="9189d07a-3956-4e2c-b226-fcdbe7924f65" />
 <meta name="_csrf_header" content="X-CSRF-TOKEN" />
@@ -128,140 +127,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 
 	
-	<meta name="description" content="We believe good health could always be made better. Shop Thorne's complete line of integrated health solutions."/>
-</head>
-
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-	<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3S9GG3" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<header id="site-navigation">
-    <a href="/accessibility" id="accessibilityStatement" class="screenreader-only">Open Accessibility Statement</a>
-	<a href="#content" id="skipNavigation" class="screenreader-only">Skip to Content</a>
-
-    <!-- Take 5 Daily subscription popup -->
-    <popup-modal :show-modal="showEmailPopup"
-                 :title="showEmailInput ? 'Get a Monthly Dose' : 'Thank you!'"
-                 @closed="closeEmailPopup"
-                 aria-describedby="take-five-description"
-                 auto-focus
-                 trap-focus
-                 v-cloak>
-
-        <div class="popup-modal-content take-five">
-            <template v-if="showEmailInput">
-                <div class="email-image">
-                    <img class="bordered-image" :src="$cdn('/images/pages/home/hand_with_shaker.jpg')" aria-label="Thorne drink shaker" alt=""/>
-                </div>
-                <p class="content-general" id="take-five-description">News, videos, and Thorne stories delivered to your inbox each month.</p>
-                <iterable-list-subscription-form
-                        list-name="take-5-daily-popover"
-                        @on-success="onEmailSubmit(true)"
-                        @on-error="onEmailSubmit(false)">
-                </iterable-list-subscription-form>
-            </template>
-            <template v-else>
-                <p class="content-general">Keep an eye on your inbox!</p>
-                <p class="content-subtitle">Want to read the latest from Thorne?</p>
-                <div class="control">
-                    <b-button @click.prevent="closeEmailPopup" id="take-five" class="is-black close-email" tabindex="0" expanded>Check our Take 5 Daily Online Magazine</b-button>
-                </div>
-                <div class="control">
-                    <b-button @click="closeEmailPopup" class="is-white close-email" tabindex="0" expanded>Close</b-button>
-                </div>
-            </template>
-        </div>
-    </popup-modal>
-
-    <!-- Product review popup modal -->
-    <popup-modal :show-modal="showReviewPopup"
-                 :title="hasCurrentProduct ? 'Product Review' : 'Thank you!'"
-                 @closed="closeReviewPopup"
-                 aria-describedby="review-product-description review-product-name"
-                 auto-focus
-                 trap-focus
-                 v-cloak>
-
-        <div class="popup-modal-content product-review">
-            <template v-if="hasCurrentProduct">
-                <p id="review-product-name" class="product-name">{{currentProduct.name}}</p>
-                <p id="review-product-description" class="content-subtitle">How would you rate this purchase?</p>
-                <div class="columns is-mobile product-div">
-                    <div class="column is-6">
-                        <div class="product-image">
-                            <img class="bordered-image" :src="currentProduct.primaryImageUrl" aria-labelledby="review-product-name" alt=""/>
-                        </div>
-                    </div>
-                    <div class="column is-6">
-                        <fieldify :errors="errors" error-prefix="Review rating" label-id="field-review-rating" error-field="review.rating">
-                            <review-stars class="star-rating"
-                                          :editable="true"
-                                          aria-errormessage="error-field-review-rating"
-                                          v-model="$v.review.rating.$model">
-                            </review-stars>
-                        </fieldify>
-                    </div>
-                </div>
-                <p class="content-subtitle">What was your reason for your rating?</p>
-                <fieldify :errors="errors" error-prefix="Review title" label-id="field-review-title" error-field="review.title">
-                    <b-input v-model="$v.review.title.$model"
-                             size="is-large"
-                             placeholder="Review Title"
-                             aria-label="Review Title"
-                             aria-required="true"
-                             aria-errormessage="error-field-review-title"
-                             :aria-invalid="$v.review.title.$invalid"
-                             tabindex="0">
-                    </b-input>
-                </fieldify>
-                <fieldify :errors="errors" error-prefix="Review description" label-id="field-review-description" error-field="review.description">
-                    <b-input v-model="$v.review.description.$model"
-                             type="textarea"
-                             size="is-large"
-                             placeholder="Review Description"
-                             aria-label="Review Description"
-                             aria-required="true"
-                             aria-multiline="true"
-                             aria-errormessage="error-field-review-description"
-                             :aria-invalid="$v.review.description.$invalid"
-                             tabindex="0">
-                    </b-input>
-                </fieldify>
-                <div class="control">
-                    <b-button @click="submitReview" class="is-black is-large" :disabled="reviewSaving" :loading="reviewSaving" expanded>Submit</b-button>
-                </div>
-            </template>
-            <template v-else-if="hasReviewedProducts">
-                <p class="content-general">We appreciate your feedback</p>
-                <template v-if="hasUnreviewedProducts">
-                    <p class="content-subtitle">Want to review more of your purchases?</p>
-                    <div class="control">
-                        <b-button @click="nextReviewProduct" class="is-black" tabindex="0" expanded>Keep reviewing!</b-button>
-                    </div>
-                </template>
-                <div class="control">
-                    <b-button @click="closeReviewPopup" :class="{'is-white': hasUnreviewedProducts, 'is-black': !hasUnreviewedProducts}" tabindex="0" expanded>Close</b-button>
-                </div>
-            </template>
-        </div>
-    </popup-modal>
-
-    <!-- Global banner -->
-    <global-banner
-    :enabled="true"
->
-    <template #content>
-        <!-- What appears on the banner -->
-        Enjoy<span class="has-text-weight-bold"> free ground shipping</span> on all retail orders. <a href='/products'>Shop Now</a>
-    </template>
-</global-banner>
-
-
-
-	
 	<div class="legacy-browser-notice" aria-hidden="true">
 		<b-icon pack="far" icon="exclamation-circle"></b-icon>
 		<strong>You're using a browser we no longer support.</strong> Improve your experience by using Chrome, Edge, Safari or Firefox.
@@ -282,17 +147,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <a href="/products">Shop</a>
     </div>
     <div class="level-item">
-      <a href="/get-started">Get Started</a>
+      <a href="/get-started">Offers</a>
     </div>
 	<div class="level-item">
-	  <a href="/at-home-tests" aria-label="Shop Tests">Health Tests</a>
+	  <a href="/at-home-tests" aria-label="Shop Tests">Pre-Workouts</a>
 	</div>
     <div class="level-item">
-      <a href="/take-5-daily">Take 5 Daily</a>
+      <a href="/take-5-daily">Award Winning Multi Vitamin</a>
     </div>
     
     <div class="level-item">
-  <a href="/explore/partner-gift-guide">Partner Essentials <span class="tag is-rounded dwyane-new">New</span></a>
+  <a href="/explore/partner-gift-guide">Essentials <span class="tag is-rounded dwyane-new">New</span></a>
 </div>
     
     <div class="level-item">
